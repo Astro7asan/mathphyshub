@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathPhys Hub — Academic STEM Resource Portal</title>
+    
+    <!-- Configure Tailwind theme tokens before loading CDN -->
+    <script>
+        window.tailwind = window.tailwind || {};
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'SF Pro Text', 'Inter', 'sans-serif'],
+                        mono: ['SF Mono', 'JetBrains Mono', 'Menlo', 'monospace'],
+                    },
+                    colors: {
+                        apple: {
+                            bg: '#f5f5f7',
+                            card: '#ffffff',
+                            text: '#1d1d1f',
+                            subtext: '#86868b',
+                            blue: '#0071e3',
+                            blueHover: '#0077ed',
+                            purple: '#af52de',
+                            green: '#34c759',
+                            orange: '#ff9500',
+                            red: '#ff3b30',
+                            border: 'rgba(0, 0, 0, 0.08)',
+                            pill: '#e8e8ed'
+                        }
+                    },
+                    boxShadow: {
+                        'apple-sm': '0 2px 8px rgba(0, 0, 0, 0.04)',
+                        'apple-card': '0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02)',
+                        'apple-hover': '0 12px 32px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04)',
+                        'apple-modal': '0 20px 40px rgba(0, 0, 0, 0.12)',
+                    }
+                }
+            }
+        };
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+            font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+            -webkit-font-smoothing: antialiased;
+        }
+        .apple-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+        }
+        .apple-card-hover {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .apple-card-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 113, 227, 0.3);
+        }
+        .segmented-btn.active {
+            background-color: #ffffff;
+            color: #1d1d1f;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        .filter-pill.active {
+            background-color: #0071e3;
+            color: #ffffff;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f5f5f7;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #d1d1d6;
+            border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #98989d;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased custom-scrollbar selection:bg-apple-blue selection:text-white">
+
+    <nav class="sticky top-0 z-50 apple-glass border-b border-apple-border transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            
+            <!-- Brand Mark -->
+            <a href="#" class="flex items-center gap-2.5 shrink-0">
+                <div class="w-8 h-8 rounded-xl bg-apple-blue flex items-center justify-center text-white font-bold text-sm shadow-apple-sm">
+                    ∑
+                </div>
+                <div>
+                    <span class="block text-base font-semibold tracking-tight text-apple-text leading-none">MathPhys<span class="text-apple-blue">Hub</span></span>
+                    <span class="block text-[10px] text-apple-subtext font-medium mt-0.5">ACADEMIC RESOURCE DIRECTORY</span>
+                </div>
+            </a>
+            
+            <!-- Nav Categories -->
+            <div class="hidden md:flex items-center gap-6 text-xs font-medium text-apple-subtext">
+                <a href="#highschool-section" class="hover:text-apple-blue transition-colors flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-apple-purple"></span> High School Hub</a>
+                <a href="#math-section" class="hover:text-apple-blue transition-colors flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-apple-blue"></span> University Math</a>
+                <a href="#physics-section" class="hover:text-apple-blue transition-colors flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-apple-green"></span> University Physics</a>
+                <a href="#quizzes-section" class="hover:text-apple-blue transition-colors flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-apple-orange"></span> Practice Vault</a>
+            </div>
+
+            <!-- Actions & Saved Drawer Button -->
+            <div class="flex items-center gap-2.5">
+                <button onclick="openToolkitModal()" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-apple-pill hover:bg-slate-200 text-apple-text rounded-full text-xs font-medium transition-all">
+                    <svg class="w-3.5 h-3.5 text-apple-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                    <span>Daily Toolkit</span>
+                </button>
+
+                <button onclick="toggleSavedDrawer()" class="relative flex items-center gap-1.5 px-3 py-1.5 bg-apple-blue hover:bg-apple-blueHover text-white rounded-full text-xs font-medium transition-all shadow-apple-sm">
+                    <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <span>Bookmarks</span>
+                    <span id="saved-counter-badge" class="bg-white text-apple-blue text-[10px] font-bold px-1.5 py-0.2 rounded-full">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="py-16 md:py-20 text-center px-4 relative overflow-hidden bg-white border-b border-apple-border">
+        <div class="max-w-4xl mx-auto space-y-6">
+            
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-apple-bg text-apple-subtext text-xs font-medium border border-apple-border">
+                <span class="w-2 h-2 rounded-full bg-apple-green animate-pulse"></span>
+                Curated Free High School & University STEM Directory
+            </div>
+
+            <h1 class="text-4xl sm:text-6xl font-bold tracking-tight text-apple-text leading-tight">
+                The ultimate library for <br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-apple-blue via-apple-purple to-apple-green">Math & Physics.</span>
+            </h1>
+            
+            <p class="text-base sm:text-lg text-apple-subtext max-w-2xl mx-auto font-normal leading-relaxed">
+                Zero paywalls. Access hand-picked textbooks, AP exam practice sets, video walkthroughs, and step-by-step problem solvers.
+            </p>
+
+            <!-- Search Bar -->
+            <div class="max-w-2xl mx-auto relative pt-2">
+                <div class="relative flex items-center">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-apple-subtext">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 0 0114 0z"/></svg>
+                    </div>
+                    <input type="text" id="master-search-input" onkeyup="filterResources()" placeholder="Search AP Physics C, Algebra 2, Paul's Notes, Flipping Physics, OpenStax..." 
+                           class="w-full pl-11 pr-10 py-3.5 bg-apple-bg border border-apple-border focus:border-apple-blue focus:bg-white rounded-2xl text-apple-text placeholder-apple-subtext text-sm transition-all focus:outline-none focus:ring-4 focus:ring-apple-blue/10 shadow-apple-sm">
+                    <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-3 text-apple-subtext hover:text-apple-text p-1">
+                        ✕
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Category Pills -->
+            <div class="flex flex-wrap items-center justify-center gap-2 text-xs font-medium pt-2">
+                <span class="text-apple-subtext mr-1">Filter:</span>
+                <button onclick="setFilterCategory(event, 'all')" class="filter-pill active px-3 py-1.5 rounded-full bg-apple-pill text-apple-text transition-all">All Resources</button>
+                <button onclick="setFilterCategory(event, 'highschool')" class="filter-pill px-3 py-1.5 rounded-full bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">High School</button>
+                <button onclick="setFilterCategory(event, 'ap')" class="filter-pill px-3 py-1.5 rounded-full bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">AP Level</button>
+                <button onclick="setFilterCategory(event, 'math')" class="filter-pill px-3 py-1.5 rounded-full bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">University Math</button>
+                <button onclick="setFilterCategory(event, 'physics')" class="filter-pill px-3 py-1.5 rounded-full bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">University Physics</button>
+                <button onclick="setFilterCategory(event, 'quiz')" class="filter-pill px-3 py-1.5 rounded-full bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">Practice Vault</button>
+            </div>
+
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+
+        <!-- Search Status Bar -->
+        <div id="search-status-bar" class="hidden bg-white p-4 rounded-2xl border border-apple-border shadow-apple-sm flex items-center justify-between">
+            <div class="text-xs text-apple-subtext font-medium">
+                Found <span id="search-count" class="text-apple-blue font-bold">0</span> resources matching: "<span id="search-query-text" class="text-apple-text italic"></span>"
+            </div>
+            <button onclick="clearSearch()" class="text-xs text-apple-blue font-semibold hover:underline">Reset Search</button>
+        </div>
+
+        <!-- =================================================================== -->
+        <!-- HIGH SCHOOL DEDICATED SECTION -->
+        <!-- =================================================================== -->
+        <section id="highschool-section" class="bg-white rounded-3xl p-6 sm:p-10 border border-apple-border shadow-apple-card space-y-8">
+            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-apple-border pb-6">
+                <div>
+                    <span class="inline-block px-3 py-1 bg-apple-purple/10 text-apple-purple text-xs font-semibold rounded-full mb-2">High School Portal</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-apple-text tracking-tight">High School Mathematics & Physics Matrix</h2>
+                    <p class="text-xs sm:text-sm text-apple-subtext mt-1">Curated learning paths for General Pace courses and College Board Advanced Placement (AP) exams.</p>
+                </div>
+
+                <!-- Segmented Control for High School Category -->
+                <div class="bg-apple-pill p-1 rounded-full flex gap-1 text-xs font-medium">
+                    <button onclick="switchHSTab('general')" id="hs-tab-general" class="segmented-btn active px-4 py-1.5 rounded-full transition-all">General Pace</button>
+                    <button onclick="switchHSTab('ap')" id="hs-tab-ap" class="segmented-btn px-4 py-1.5 text-apple-subtext rounded-full transition-all">AP Level (College Board)</button>
+                </div>
+            </div>
+
+            <!-- TAB 1: GENERAL PACE HIGH SCHOOL -->
+            <div id="hs-general-content" class="space-y-8">
+                
+                <!-- General Math Accordion / Topic Selector -->
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-base font-bold text-apple-text flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-lg bg-apple-blue/10 text-apple-blue flex items-center justify-center text-xs font-bold">1</span>
+                            General High School Mathematics
+                        </h3>
+                        <span class="text-xs text-apple-subtext font-medium">Click a topic to view curated resources</span>
+                    </div>
+
+                    <!-- Subject Switcher Pills -->
+                    <div class="flex flex-wrap gap-2 text-xs font-medium">
+                        <button onclick="selectHSMathSubject('alg1')" id="hs-math-btn-alg1" class="hs-math-pill active px-3.5 py-2 rounded-xl bg-apple-blue text-white transition-all shadow-apple-sm">Algebra 1</button>
+                        <button onclick="selectHSMathSubject('geo')" id="hs-math-btn-geo" class="hs-math-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">Geometry</button>
+                        <button onclick="selectHSMathSubject('alg2')" id="hs-math-btn-alg2" class="hs-math-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">Algebra 2</button>
+                        <button onclick="selectHSMathSubject('precalc')" id="hs-math-btn-precalc" class="hs-math-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">Precalculus</button>
+                        <button onclick="selectHSMathSubject('calc')" id="hs-math-btn-calc" class="hs-math-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">Calculus (Intro)</button>
+                    </div>
+
+                    <!-- Dynamic Topic Cards Box -->
+                <div class="grid md:grid-cols-3 gap-4 pt-2" id="hs-math-cards-container">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+            <!-- General Physics Section -->
+            <div class="space-y-4 pt-6 border-t border-apple-border">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <h3 class="text-base font-bold text-apple-text flex items-center gap-2">
+                        <span class="w-6 h-6 rounded-lg bg-apple-green/10 text-apple-green flex items-center justify-center text-xs font-bold">2</span>
+                        General Pace High School Physics Matrix
+                    </h3>
+                    <span class="text-xs text-apple-subtext font-medium">Select a unit topic to view curated resources:</span>
+                </div>
+
+                <!-- Subject Switcher Pills -->
+                <div class="flex flex-wrap gap-2 text-xs font-medium">
+                    <button onclick="selectHSPhysicsTopic('master')" id="hs-phys-btn-master" class="hs-phys-pill active px-3.5 py-2 rounded-xl bg-apple-green text-white transition-all shadow-apple-sm">Master Resource Vault</button>
+                    <button onclick="selectHSPhysicsTopic('kinematics')" id="hs-phys-btn-kinematics" class="hs-phys-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">Kinematics & Forces</button>
+                    <button onclick="selectHSPhysicsTopic('energy')" id="hs-phys-btn-energy" class="hs-phys-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">Energy & Momentum</button>
+                    <button onclick="selectHSPhysicsTopic('waves')" id="hs-phys-btn-waves" class="hs-phys-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">Waves & Optics</button>
+                    <button onclick="selectHSPhysicsTopic('electricity')" id="hs-phys-btn-electricity" class="hs-phys-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">Electricity & Circuits</button>
+                </div>
+
+                <!-- Dynamic Topic Cards Box -->
+                <div class="grid md:grid-cols-3 gap-4 pt-2" id="hs-physics-cards-container">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TAB 2: AP LEVEL (COLLEGE BOARD) -->
+            <div id="hs-ap-content" class="hidden space-y-8">
+                
+                <div class="space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-apple-border pb-4">
+                        <div>
+                            <span class="inline-block px-2.5 py-0.5 bg-apple-purple/10 text-apple-purple text-[10px] font-bold uppercase tracking-wider rounded-md mb-1">College Board Matrix</span>
+                            <h3 class="text-lg font-bold text-apple-text tracking-tight">Curated AP Course Resource Vault</h3>
+                        </div>
+                        <span class="text-xs text-apple-subtext font-medium">Select an AP course to view structured learning paths:</span>
+                    </div>
+
+                    <!-- AP Subject Switcher Pills -->
+                    <div class="flex flex-wrap gap-2 text-xs font-medium pt-1">
+                        <button onclick="selectAPCourse('precalc')" id="ap-btn-precalc" class="ap-course-pill active px-3.5 py-2 rounded-xl bg-apple-purple text-white transition-all shadow-apple-sm">AP Precalculus</button>
+                        <button onclick="selectAPCourse('calc-ab')" id="ap-btn-calc-ab" class="ap-course-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">AP Calc AB</button>
+                        <button onclick="selectAPCourse('calc-bc')" id="ap-btn-calc-bc" class="ap-course-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">AP Calc BC</button>
+                        <button onclick="selectAPCourse('phys-1')" id="ap-btn-phys-1" class="ap-course-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">AP Physics 1</button>
+                        <button onclick="selectAPCourse('phys-2')" id="ap-btn-phys-2" class="ap-course-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">AP Physics 2</button>
+                        <button onclick="selectAPCourse('phys-c-mech')" id="ap-btn-phys-c-mech" class="ap-course-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">AP Physics C: Mech</button>
+                        <button onclick="selectAPCourse('phys-c-em')" id="ap-btn-phys-c-em" class="ap-course-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all">AP Physics C: E&M</button>
+                    </div>
+
+                    <!-- Selected AP Course Description Header -->
+                    <div class="bg-apple-bg p-4 rounded-2xl border border-apple-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                        <div>
+                            <h4 id="ap-course-title" class="text-base font-bold text-apple-text">AP Precalculus</h4>
+                            <p id="ap-course-desc" class="text-xs text-apple-subtext mt-0.5">Master polynomial, rational, exponential, logarithmic, and trigonometric functions for College Board AP Precalculus.</p>
+                        </div>
+                        <span id="ap-course-badge" class="shrink-0 px-2.5 py-1 bg-apple-purple/10 text-apple-purple text-[10px] font-bold rounded-full uppercase">Official AP Exam</span>
+                    </div>
+
+                    <!-- Category Breakdown Grid (Youtubers, Programs, Practice) -->
+                    <div class="grid md:grid-cols-3 gap-6 pt-2" id="ap-resource-display-grid">
+                        <!-- Populated dynamically via JavaScript -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- UNIVERSITY MATHEMATICS SECTION -->
+        <!-- =================================================================== -->
+        <section id="math-section" class="space-y-6">
+            <div class="flex flex-wrap items-end justify-between gap-4 border-b border-apple-border pb-4">
+                <div>
+                    <span class="text-xs text-apple-blue font-semibold uppercase tracking-wider">University Level</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-apple-text tracking-tight">Mathematics Vault</h2>
+                </div>
+                <p class="text-xs sm:text-sm text-apple-subtext max-w-md">Comprehensive reference notes, video lectures, and open textbooks for undergraduate mathematics.</p>
+            </div>
+
+            <!-- Math Grid Cards -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="math-cards-grid">
+
+                <!-- Paul's Online Math Notes -->
+                <div class="bg-white p-6 rounded-3xl border border-apple-border shadow-apple-card apple-card-hover flex flex-col justify-between resource-card" data-category="math" data-tags="calculus algebra differential equations notes tutorial paul lamar university">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 bg-apple-blue/10 text-apple-blue rounded-full text-[10px] font-semibold">Core University</span>
+                            <button onclick="toggleBookmark('pauls-notes')" id="star-pauls-notes" class="text-slate-300 hover:text-amber-400 transition-colors text-lg">★</button>
+                        </div>
+                        <h3 class="text-base font-bold text-apple-text mb-2">Paul's Online Math Notes</h3>
+                        <p class="text-xs text-apple-subtext leading-relaxed mb-4">The absolute gold standard for university math. Concise cheat sheets, worked examples, and full class notes for Calculus I-III and Differential Equations.</p>
+                    </div>
+                    <div class="pt-4 border-t border-apple-border flex items-center justify-between text-xs">
+                        <span class="text-apple-subtext">Lamar University</span>
+                        <a href="https://tutorial.math.lamar.edu" target="_blank" rel="noopener" class="text-apple-blue font-semibold hover:underline">Access Notes →</a>
+                    </div>
+                </div>
+
+                <!-- 3Blue1Brown Essence Series -->
+                <div class="bg-white p-6 rounded-3xl border border-apple-border shadow-apple-card apple-card-hover flex flex-col justify-between resource-card" data-category="math" data-tags="calculus linear algebra geometric intuition 3blue1brown grant sanderson videos">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 bg-apple-purple/10 text-apple-purple rounded-full text-[10px] font-semibold">Geometric Intuition</span>
+                            <button onclick="toggleBookmark('3b1b-math')" id="star-3b1b-math" class="text-slate-300 hover:text-amber-400 transition-colors text-lg">★</button>
+                        </div>
+                        <h3 class="text-base font-bold text-apple-text mb-2">3Blue1Brown: Essence Series</h3>
+                        <p class="text-xs text-apple-subtext leading-relaxed mb-4">Master the geometric intuition behind Linear Algebra, Calculus, and Fourier Analysis through Grant Sanderson's world-class animations.</p>
+                    </div>
+                    <div class="pt-4 border-t border-apple-border flex items-center justify-between text-xs">
+                        <span class="text-apple-subtext">Grant Sanderson</span>
+                        <a href="https://www.3blue1brown.com" target="_blank" rel="noopener" class="text-apple-blue font-semibold hover:underline">Watch Animations →</a>
+                    </div>
+                </div>
+
+                <!-- MIT OCW Math -->
+                <div class="bg-white p-6 rounded-3xl border border-apple-border shadow-apple-card apple-card-hover flex flex-col justify-between resource-card" data-category="math" data-tags="mit ocw single variable multivariable calculus linear algebra exams">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 bg-apple-blue/10 text-apple-blue rounded-full text-[10px] font-semibold">MIT University</span>
+                            <button onclick="toggleBookmark('mit-ocw-math')" id="star-mit-ocw-math" class="text-slate-300 hover:text-amber-400 transition-colors text-lg">★</button>
+                        </div>
+                        <h3 class="text-base font-bold text-apple-text mb-2">MIT OpenCourseWare (Math)</h3>
+                        <p class="text-xs text-apple-subtext leading-relaxed mb-4">Complete MIT lecture video series, lecture notes, assignments, and solution keys for 18.01 (Single Variable) and 18.06 (Linear Algebra).</p>
+                    </div>
+                    <div class="pt-4 border-t border-apple-border flex items-center justify-between text-xs">
+                        <span class="text-apple-subtext">MIT OCW</span>
+                        <a href="https://ocw.mit.edu/courses/mathematics/" target="_blank" rel="noopener" class="text-apple-blue font-semibold hover:underline">Explore Courses →</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- UNIVERSITY PHYSICS SECTION -->
+        <!-- =================================================================== -->
+        <section id="physics-section" class="space-y-6">
+            <div class="flex flex-wrap items-end justify-between gap-4 border-b border-apple-border pb-4">
+                <div>
+                    <span class="text-xs text-apple-green font-semibold uppercase tracking-wider">University Level</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-apple-text tracking-tight">Physics Vault</h2>
+                </div>
+                <p class="text-xs sm:text-sm text-apple-subtext max-w-md">From classical Newtonian mechanics to electromagnetism and quantum field theory.</p>
+            </div>
+
+            <!-- Physics Grid Cards -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="physics-cards-grid">
+
+                <!-- Feynman Lectures -->
+                <div class="bg-white p-6 rounded-3xl border border-apple-border shadow-apple-card apple-card-hover flex flex-col justify-between resource-card" data-category="physics" data-tags="feynman lectures caltech quantum mechanics electromagnetism classical physics online">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 bg-apple-green/10 text-apple-green rounded-full text-[10px] font-semibold">Caltech Online</span>
+                            <button onclick="toggleBookmark('feynman-lectures')" id="star-feynman-lectures" class="text-slate-300 hover:text-amber-400 transition-colors text-lg">★</button>
+                        </div>
+                        <h3 class="text-base font-bold text-apple-text mb-2">The Feynman Lectures on Physics</h3>
+                        <p class="text-xs text-apple-subtext leading-relaxed mb-4">Direct web edition hosted by Caltech. Read Richard Feynman's legendary 3-volume series covering mechanics, radiation, electromagnetism, and quantum physics.</p>
+                    </div>
+                    <div class="pt-4 border-t border-apple-border flex items-center justify-between text-xs">
+                        <span class="text-apple-subtext">Caltech University</span>
+                        <a href="https://feynmanlectures.caltech.edu" target="_blank" rel="noopener" class="text-apple-blue font-semibold hover:underline">Read Volumes →</a>
+                    </div>
+                </div>
+
+                <!-- PhET Interactive Simulations -->
+                <div class="bg-white p-6 rounded-3xl border border-apple-border shadow-apple-card apple-card-hover flex flex-col justify-between resource-card" data-category="physics" data-tags="phet colorado interactive simulations labs optics forces circuits quantum sandbox">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 bg-apple-green/10 text-apple-green rounded-full text-[10px] font-semibold">Interactive Labs</span>
+                            <button onclick="toggleBookmark('phet-sims')" id="star-phet-sims" class="text-slate-300 hover:text-amber-400 transition-colors text-lg">★</button>
+                        </div>
+                        <h3 class="text-base font-bold text-apple-text mb-2">PhET Interactive Simulations</h3>
+                        <p class="text-xs text-apple-subtext leading-relaxed mb-4">HTML5 visual physics sandbox built by UC Boulder. Manipulate vector forces, electronic circuits, wave interference, and photoelectric effects.</p>
+                    </div>
+                    <div class="pt-4 border-t border-apple-border flex items-center justify-between text-xs">
+                        <span class="text-apple-subtext">CU Boulder</span>
+                        <a href="https://phet.colorado.edu" target="_blank" rel="noopener" class="text-apple-blue font-semibold hover:underline">Launch Sims →</a>
+                    </div>
+                </div>
+
+                <!-- OpenStax University Physics -->
+                <div class="bg-white p-6 rounded-3xl border border-apple-border shadow-apple-card apple-card-hover flex flex-col justify-between resource-card" data-category="physics" data-tags="openstax university physics volume 1 2 3 mechanics em thermodynamics modern physics">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="px-2.5 py-1 bg-apple-blue/10 text-apple-blue rounded-full text-[10px] font-semibold">Free Textbook</span>
+                            <button onclick="toggleBookmark('openstax-physics')" id="star-openstax-physics" class="text-slate-300 hover:text-amber-400 transition-colors text-lg">★</button>
+                        </div>
+                        <h3 class="text-base font-bold text-apple-text mb-2">OpenStax University Physics</h3>
+                        <p class="text-xs text-apple-subtext leading-relaxed mb-4">Calculus-based 3-volume open textbook suite covering mechanics, thermodynamics, electricity, magnetism, optics, and modern physics.</p>
+                    </div>
+                    <div class="pt-4 border-t border-apple-border flex items-center justify-between text-xs">
+                        <span class="text-apple-subtext">Rice University</span>
+                        <a href="https://openstax.org/subjects/science" target="_blank" rel="noopener" class="text-apple-blue font-semibold hover:underline">Download PDFs →</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =================================================================== -->
+        <!-- PRACTICE VAULT SECTION -->
+        <!-- =================================================================== -->
+        <section id="quizzes-section" class="bg-gradient-to-br from-white to-apple-bg rounded-3xl p-6 sm:p-10 border border-apple-border shadow-apple-card space-y-8">
+            <div class="grid lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-6 space-y-4">
+                    <span class="px-3 py-1 bg-apple-orange/10 text-apple-orange text-xs font-semibold rounded-full inline-block">Interactive Diagnostic</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-apple-text tracking-tight">On-Page Skill Checkup</h2>
+                    <p class="text-xs sm:text-sm text-apple-subtext leading-relaxed">
+                        Test your conceptual intuition directly on page! Answer quick diagnostic questions in calculus or mechanics with instant feedback.
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button onclick="startBuiltInQuiz('calc')" class="px-4 py-2 bg-apple-blue text-white font-medium text-xs rounded-full shadow-apple-sm hover:bg-apple-blueHover transition-all">
+                            Start Calculus Checkup
+                        </button>
+                        <button onclick="startBuiltInQuiz('physics')" class="px-4 py-2 bg-white text-apple-text font-medium text-xs rounded-full border border-apple-border hover:bg-apple-pill transition-all">
+                            Start Mechanics Checkup
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Interactive Quiz Card -->
+                <div class="lg:col-span-6 bg-white p-6 rounded-2xl border border-apple-border shadow-apple-sm min-h-[220px] flex flex-col justify-between" id="quiz-widget-box">
+                    <div id="quiz-welcome-state">
+                        <span class="block text-[10px] text-apple-orange font-bold uppercase tracking-wider mb-2">Diagnostic Engine</span>
+                        <h3 class="text-base font-bold text-apple-text mb-2">Ready to test your STEM concepts?</h3>
+                        <p class="text-xs text-apple-subtext leading-relaxed">
+                            Click a topic button on the left to load sample problem sets with worked step-by-step solutions.
+                        </p>
+                    </div>
+                    <div id="quiz-active-state" class="hidden space-y-3">
+                        <div class="flex justify-between text-[11px] text-apple-subtext border-b border-apple-border pb-2">
+                            <span id="quiz-topic-badge" class="text-apple-blue font-bold">CALCULUS</span>
+                            <span id="quiz-progress-indicator">Question 1 of 3</span>
+                        </div>
+                        <p id="quiz-question-text" class="text-xs font-semibold text-apple-text leading-normal"></p>
+                        <div id="quiz-options-container" class="space-y-2 pt-1"></div>
+                        <div id="quiz-feedback-box" class="hidden p-3 rounded-xl text-xs"></div>
+                    </div>
+                    <div id="quiz-footer-actions" class="hidden pt-3 border-t border-apple-border flex justify-between items-center">
+                        <span id="quiz-score-tracker" class="text-xs text-apple-subtext font-medium">Score: 0/0</span>
+                        <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="px-3 py-1 bg-apple-blue text-white text-xs font-semibold rounded-full hover:bg-apple-blueHover">Next Question →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Saved Bookmarks Slide-Over Drawer -->
+    <div id="saved-drawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-md bg-white border-l border-apple-border shadow-apple-modal transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-6 border-b border-apple-border flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-amber-400 text-xl">★</span>
+                <h3 class="text-base font-bold text-apple-text">Your Saved Dashboard</h3>
+            </div>
+            <button onclick="toggleSavedDrawer()" class="text-apple-subtext hover:text-apple-text text-lg p-1">✕</button>
+        </div>
+        <div id="saved-items-container" class="p-6 flex-1 overflow-y-auto space-y-4 custom-scrollbar">
+            <!-- Dynamic Saved Cards Inserted Here -->
+        </div>
+        <div class="p-4 border-t border-apple-border bg-apple-bg text-center">
+            <p class="text-[11px] text-apple-subtext">Saved locally to your browser storage for daily quick access.</p>
+        </div>
+    </div>
+
+    <!-- Student Daily Toolkit Modal -->
+    <div id="toolkit-modal" class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-4xl rounded-3xl border border-apple-border shadow-apple-modal overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="p-6 border-b border-apple-border flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-apple-text">Student Daily STEM Toolkit</h3>
+                    <span class="text-xs text-apple-subtext">Calculators, 2D/3D Graphers, and Computational Solvers</span>
+                </div>
+                <button onclick="closeToolkitModal()" class="text-apple-subtext hover:text-apple-text text-xl p-1">✕</button>
+            </div>
+
+            <!-- Toolkit Tabs -->
+            <div class="flex border-b border-apple-border bg-apple-bg px-6 text-xs font-medium">
+                <button onclick="switchToolkitTab('desmos')" id="tool-tab-desmos" class="px-4 py-3 border-b-2 border-apple-blue text-apple-blue font-semibold">Desmos Grapher</button>
+                <button onclick="switchToolkitTab('wolfram')" id="tool-tab-wolfram" class="px-4 py-3 border-b-2 border-transparent text-apple-subtext hover:text-apple-text">WolframAlpha Solver</button>
+            </div>
+
+            <div class="p-6 flex-1 overflow-y-auto custom-scrollbar">
+                <!-- Desmos Tab -->
+                <div id="tool-content-desmos" class="space-y-3">
+                    <div class="flex justify-between items-center text-xs text-apple-subtext">
+                        <span>Interactive 2D/3D Graphing Engine:</span>
+                        <a href="https://www.desmos.com/calculator" target="_blank" rel="noopener" class="text-apple-blue hover:underline">Open Fullscreen Desmos ↗</a>
+                    </div>
+                    <iframe id="desmos-iframe" src="https://www.desmos.com/calculator" class="w-full h-[400px] rounded-2xl border border-apple-border bg-apple-bg"></iframe>
+                </div>
+
+                <!-- WolframAlpha Tab -->
+                <div id="tool-content-wolfram" class="hidden space-y-6 py-4">
+                    <div class="text-center max-w-xl mx-auto space-y-2">
+                        <h4 class="text-lg font-bold text-apple-text">WolframAlpha Computational Query</h4>
+                        <p class="text-xs text-apple-subtext">Evaluate definite integrals, compute derivatives, solve differential equations, or analyze vectors instantly.</p>
+                    </div>
+                    <div class="max-w-xl mx-auto flex gap-2">
+                        <input type="text" id="wolfram-input" placeholder="e.g. derivative of x^3 * sin(x) or solve y'' + 4y = 0" class="flex-1 bg-apple-bg border border-apple-border rounded-xl px-4 py-3 text-xs text-apple-text focus:border-apple-blue focus:outline-none focus:bg-white">
+                        <button onclick="launchWolframQuery()" class="px-5 py-3 bg-apple-blue text-white font-semibold text-xs rounded-xl hover:bg-apple-blueHover">Compute</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white border-t border-apple-border py-12 text-xs text-apple-subtext mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-lg bg-apple-blue text-white font-bold text-xs flex items-center justify-center">
+                    ∑
+                </div>
+                <span class="font-semibold text-apple-text">MathPhys Hub</span>
+            </div>
+            <p>&copy; 2026 MathPhys Hub. Designed for students worldwide.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Controllers -->
+    <script>
+        const hsMathData = {
+            alg1: [
+                {
+                    title: "Khan Academy Algebra 1",
+                    desc: "Master linear equations, inequalities, functions, and quadratic expressions with step-by-step video lessons and practice drills.",
+                    link: "https://www.khanacademy.org/math/algebra",
+                    badge: "Free Video Course"
+                },
+                {
+                    title: "DeltaMath Algebra 1 Practice",
+                    desc: "Free problem sets with detailed step-by-step solutions for solving multi-step equations and factoring quadratics.",
+                    link: "https://www.deltamath.com",
+                    badge: "Interactive Drills"
+                },
+                {
+                    title: "Organic Chemistry Tutor: Alg 1",
+                    desc: "Clear, straightforward video tutorials covering foundational algebra formulas, graphing lines, and exponent rules.",
+                    link: "https://www.youtube.com/playlist?list=PL0o_zxa4K1BWziAJPOQxQmL_Sk684E-JR",
+                    badge: "Video Walkthroughs"
+                }
+            ],
+            geo: [
+                {
+                    title: "Khan Academy Geometry",
+                    desc: "Explore Euclidean proofs, similarity, right triangle trigonometry, transformations, and coordinate geometry.",
+                    link: "https://www.khanacademy.org/math/geometry",
+                    badge: "Full Course"
+                },
+                {
+                    title: "Physics Classroom Geometry in Physics",
+                    desc: "Learn how geometric sine/cosine vectors apply directly to real physical force diagrams.",
+                    link: "https://www.physicsclassroom.com/Class/vectors",
+                    badge: "Applied Physics"
+                },
+                {
+                    title: "OpenStax High School Geometry",
+                    desc: "Peer-reviewed free open-access textbook covering proofs, circles, volume, and surface area.",
+                    link: "https://openstax.org/subjects/math",
+                    badge: "Free Textbook"
+                }
+            ],
+            alg2: [
+                {
+                    title: "Paul's Algebra 2 & Trig Review",
+                    desc: "Concise cheat sheets covering logarithms, complex numbers, polynomial roots, and trigonometric identities.",
+                    link: "https://tutorial.math.lamar.edu/Classes/Alg/Alg.aspx",
+                    badge: "Cheat Sheets"
+                },
+                {
+                    title: "Khan Academy Algebra 2",
+                    desc: "Deep dive into rational functions, logarithms, sequence & series, and transformations of functions.",
+                    link: "https://www.khanacademy.org/math/algebra2",
+                    badge: "Interactive Practice"
+                },
+                {
+                    title: "PatrickJMT Algebra 2",
+                    desc: "Quick 5-minute video solutions for solving systems of equations, matrix operations, and synthetic division.",
+                    link: "http://www.patrickjmt.com",
+                    badge: "Quick Problem Solvers"
+                }
+            ],
+            precalc: [
+                {
+                    title: "Khan Academy Precalculus",
+                    desc: "Master composite functions, unit circle trigonometry, polar coordinates, complex numbers, and matrices.",
+                    link: "https://www.khanacademy.org/math/precalculus",
+                    badge: "Mastery Course"
+                },
+                {
+                    title: "OpenStax Precalculus Textbook",
+                    desc: "Comprehensive 100% free textbook covering function modeling, vectors, and limits preparation for calculus.",
+                    link: "https://openstax.org/details/books/precalculus",
+                    badge: "Free PDF Book"
+                },
+                {
+                    title: "3Blue1Brown Trigonometry",
+                    desc: "Visual intuitive animations explaining why the unit circle works and how sine/cosine waves oscillate.",
+                    link: "https://www.3blue1brown.com",
+                    badge: "Visual Intuition"
+                }
+            ],
+            calc: [
+                {
+                    title: "Professor Leonard Intro Calculus",
+                    desc: "Full recorded classroom lectures explaining limits, derivatives, related rates, and definite integrals in detail.",
+                    link: "https://www.youtube.com/@ProfessorLeonard",
+                    badge: "Full Class Lectures"
+                },
+                {
+                    title: "Paul's Online Calculus I Notes",
+                    desc: "The premier web reference for limits, derivative rules, optimization problems, and integration by substitution.",
+                    link: "https://tutorial.math.lamar.edu/Classes/CalcI/CalcI.aspx",
+                    badge: "Class Notes"
+                },
+                {
+                    title: "3Blue1Brown Essence of Calculus",
+                    desc: "The world's best geometric explanation of derivatives, integrals, and the Fundamental Theorem of Calculus.",
+                    link: "https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5We",
+                    badge: "Must Watch"
+                }
+            ]
+        };
+
+        function selectHSMathSubject(subKey) {
+            document.querySelectorAll('.hs-math-pill').forEach(btn => {
+                btn.className = "hs-math-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all";
+            });
+            const activeBtn = document.getElementById(`hs-math-btn-${subKey}`);
+            if (activeBtn) {
+                activeBtn.className = "hs-math-pill active px-3.5 py-2 rounded-xl bg-apple-blue text-white transition-all shadow-apple-sm";
+            }
+
+            const items = hsMathData[subKey] || [];
+            const container = document.getElementById('hs-math-cards-container');
+            container.innerHTML = items.map(item => `
+                <div class="bg-apple-bg p-5 rounded-2xl border border-apple-border apple-card-hover flex flex-col justify-between resource-card" data-category="highschool" data-tags="high school math ${subKey}">
+                    <div>
+                        <span class="px-2 py-0.5 bg-apple-blue/10 text-apple-blue rounded text-[10px] font-semibold mb-2 inline-block">${item.badge}</span>
+                        <h4 class="text-sm font-bold text-apple-text mb-1">${item.title}</h4>
+                        <p class="text-xs text-apple-subtext leading-relaxed mb-4">${item.desc}</p>
+                    </div>
+                    <a href="${item.link}" target="_blank" rel="noopener" class="text-xs text-apple-blue font-semibold hover:underline flex items-center justify-between">
+                        <span>Access Resource</span> →
+                    </a>
+                </div>
+            `).join('');
+        }
+
+        const hsPhysicsData = {
+            master: [
+                {
+                    title: "OpenStax High School Physics (Full PDF)",
+                    desc: "Peer-reviewed 100% free high school physics textbook covering all standard units with worked examples and problem sets.",
+                    link: "https://openstax.org/details/books/physics",
+                    badge: "Free Textbook",
+                    tags: "physics openstax textbook free PDF general high school"
+                },
+                {
+                    title: "Physics Classroom Full Curriculum",
+                    desc: "The ultimate free high school physics portal with interactive concept builders, vector graphics, and practice quizzes.",
+                    link: "https://www.physicsclassroom.com",
+                    badge: "Complete Hub",
+                    tags: "physics physics classroom interactive general tutorial"
+                },
+                {
+                    title: "Flipping Physics General Physics Series",
+                    desc: "Engaging video demonstrations and real-world experiments simplifying general high school physics concepts.",
+                    link: "https://www.flippingphysics.com/basic-physics.html",
+                    badge: "Video Course",
+                    tags: "physics flipping physics video demonstrations general"
+                },
+                {
+                    title: "Khan Academy High School Physics",
+                    desc: "Complete video-based curriculum with diagnostic quizzes after every lesson covering motion, forces, energy, and waves.",
+                    link: "https://www.khanacademy.org/science/highschool-physics",
+                    badge: "Interactive Course",
+                    tags: "physics khan academy high school course general"
+                },
+                {
+                    title: "APlusPhysics Regents & Honors Physics",
+                    desc: "Free downloadable PDF study guides, formula sheets, and step-by-step problem worksheets for general high school physics.",
+                    link: "https://www.aplusphysics.com/courses/regents/index.html",
+                    badge: "PDF Notes & Worksheets",
+                    tags: "physics aplusphysics regents worksheets pdf study guides"
+                },
+                {
+                    title: "DeltaMath High School Physics Modules",
+                    desc: "Auto-graded problem sets with instant step-by-step worked solutions for kinematics, forces, and circuit calculations.",
+                    link: "https://www.deltamath.com",
+                    badge: "Auto-Graded Drills",
+                    tags: "physics deltamath practice problem sets general"
+                }
+            ],
+            kinematics: [
+                {
+                    title: "The Physics Classroom: Motion & Forces",
+                    desc: "Interactive concept builders, 1D/2D vector kinematics, Newton's 3 laws, and free-body diagrams.",
+                    link: "https://www.physicsclassroom.com/Class/1DKin",
+                    badge: "Interactive Tutorial",
+                    tags: "physics kinematics forces newton motion general"
+                },
+                {
+                    title: "PhET Forces and Motion (CU Boulder)",
+                    desc: "Manipulate friction, mass, and applied forces in real-time to visualize acceleration, velocity vectors, and net force equations.",
+                    link: "https://phet.colorado.edu/en/simulations/filter?type=html&subject=physics",
+                    badge: "Interactive Lab Sim",
+                    tags: "physics phet simulation forces vectors kinematics"
+                },
+                {
+                    title: "Organic Chemistry Tutor: Physics Kinematics",
+                    desc: "Step-by-step video problem walkthroughs for projectile motion, displacement equations, free fall, and vector component calculations.",
+                    link: "https://www.youtube.com/playlist?list=PL0o_zxa4K1BU6wrbC3a6Ja3bJHvGs_yM8",
+                    badge: "Video Walkthroughs",
+                    tags: "physics youtube organic chemistry tutor kinematics"
+                },
+                {
+                    title: "oPhysics: 2D Kinematics & Projectiles",
+                    desc: "Hidden gem 2D physics simulation suite built by Tom Walsh. Visualize trajectory curves, velocity vectors, and ramp acceleration.",
+                    link: "https://www.ophysics.com/k1.html",
+                    badge: "Hidden Gem Sim",
+                    tags: "physics ophysics simulation kinematics vectors"
+                }
+            ],
+            energy: [
+                {
+                    title: "PhET Energy Skate Park",
+                    desc: "Track kinetic energy, gravitational potential energy, and thermal friction losses in real time on customizable skate tracks.",
+                    link: "https://phet.colorado.edu/en/simulations/energy-skate-park",
+                    badge: "Interactive Lab",
+                    tags: "physics energy phet conservation potential kinetic"
+                },
+                {
+                    title: "Flipping Physics: Work, Energy & Power",
+                    desc: "Comedic and clear video demonstrations explaining work-energy theorem, spring elastic potential energy, and momentum.",
+                    link: "https://www.flippingphysics.com/basic-physics.html",
+                    badge: "Video Walkthroughs",
+                    tags: "physics flipping physics energy momentum work"
+                },
+                {
+                    title: "OpenStax High School Physics: Energy Ch. 7-9",
+                    desc: "100% free open textbook chapters covering work, mechanical energy, collisions, and impulse momentum equations.",
+                    link: "https://openstax.org/details/books/physics",
+                    badge: "Free Textbook PDF",
+                    tags: "physics openstax textbook energy momentum"
+                },
+                {
+                    title: "Physics Classroom: Momentum & Collisions",
+                    desc: "Concept builders for elastic vs inelastic collisions, impulse-momentum change theorem, and system momentum conservation.",
+                    link: "https://www.physicsclassroom.com/Class/momentum",
+                    badge: "Concept Builder",
+                    tags: "physics collisions momentum practice impulse"
+                }
+            ],
+            waves: [
+                {
+                    title: "Physics Classroom: Waves, Sound & Light",
+                    desc: "Comprehensive tutorials on transverse/longitudinal waves, Doppler effect, refraction, Snell's law, and wave interference.",
+                    link: "https://www.physicsclassroom.com/Class/waves",
+                    badge: "Complete Guide",
+                    tags: "physics waves optics sound light refraction"
+                },
+                {
+                    title: "PhET Wave Interference & Bending Light",
+                    desc: "Simulate water, sound, and light wave superposition, double slit diffraction patterns, and total internal reflection.",
+                    link: "https://phet.colorado.edu/en/simulations/wave-interference",
+                    badge: "Interactive Simulation",
+                    tags: "physics phet waves optics light refraction"
+                },
+                {
+                    title: "Walter Fendt Physics Applets: Optics & Waves",
+                    desc: "Classic physics simulation collection detailing thin lens ray diagrams, concave/convex mirrors, and standing wave harmonics.",
+                    link: "https://www.walter-fendt.de/html5/phen/",
+                    badge: "Hidden Gem Applets",
+                    tags: "physics optics walter fendt ray diagrams waves"
+                },
+                {
+                    title: "CrashCourse Physics: Optics & Light",
+                    desc: "Fast-paced, highly visual video explanations of geometric optics, electromagnetic spectrum, and reflection properties.",
+                    link: "https://www.youtube.com/playlist?list=PL8dPuuaLjXtN0ge7yDk_00Q9y4YkE-687",
+                    badge: "Video Course",
+                    tags: "physics crashcourse optics videos light waves"
+                }
+            ],
+            electricity: [
+                {
+                    title: "PhET Circuit Construction Kit (DC)",
+                    desc: "Build virtual series and parallel circuits with batteries, resistors, lightbulbs, ammeters, and voltmeters to test Ohm's Law.",
+                    link: "https://phet.colorado.edu/en/simulations/circuit-construction-kit-dc",
+                    badge: "Virtual Circuit Lab",
+                    tags: "physics circuits electricity phet ohms law"
+                },
+                {
+                    title: "The Physics Classroom: Electric Circuits",
+                    desc: "Step-by-step guides for calculating equivalent resistance, voltage drops, electric power (Watts), and Kirchhoff's loop rules.",
+                    link: "https://www.physicsclassroom.com/Class/circuits",
+                    badge: "Tutorial & Drills",
+                    tags: "physics circuits electricity current resistance"
+                },
+                {
+                    title: "Regents Physics: Electricity & Magnetism",
+                    desc: "Free comprehensive study notes, formula sheets, and past practice exam questions for high school electrostatics and magnetism.",
+                    link: "https://www.aplusphysics.com/courses/regents/index.html",
+                    badge: "Free Study Notes",
+                    tags: "physics regents electricity notes aplusphysics magnetism"
+                },
+                {
+                    title: "Doc Schuster Electric Circuits & Magnetism",
+                    desc: "Engaging chalkboard video lectures breaking down electric fields, Coulomb's Law, magnetic poles, and induction basics.",
+                    link: "https://www.youtube.com/user/DocSchuster",
+                    badge: "Video Lectures",
+                    tags: "physics doc schuster circuits electricity youtube"
+                }
+            ]
+        };
+
+        function selectHSPhysicsTopic(topicKey) {
+            document.querySelectorAll('.hs-phys-pill').forEach(btn => {
+                btn.className = "hs-phys-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all";
+            });
+            const activeBtn = document.getElementById(`hs-phys-btn-${topicKey}`);
+            if (activeBtn) {
+                activeBtn.className = "hs-phys-pill active px-3.5 py-2 rounded-xl bg-apple-green text-white transition-all shadow-apple-sm";
+            }
+
+            const items = hsPhysicsData[topicKey] || [];
+            const container = document.getElementById('hs-physics-cards-container');
+            container.innerHTML = items.map(item => `
+                <div class="bg-apple-bg p-5 rounded-2xl border border-apple-border apple-card-hover flex flex-col justify-between resource-card" data-category="highschool" data-tags="${item.tags}">
+                    <div>
+                        <span class="px-2 py-0.5 bg-apple-green/10 text-apple-green rounded text-[10px] font-semibold mb-2 inline-block">${item.badge}</span>
+                        <h4 class="text-sm font-bold text-apple-text mb-1">${item.title}</h4>
+                        <p class="text-xs text-apple-subtext leading-relaxed mb-4">${item.desc}</p>
+                    </div>
+                    <a href="${item.link}" target="_blank" rel="noopener" class="text-xs text-apple-blue font-semibold hover:underline flex items-center justify-between">
+                        <span>Access Resource</span> →
+                    </a>
+                </div>
+            `).join('');
+        }
+
+        function switchHSTab(tab) {
+            const btnGen = document.getElementById('hs-tab-general');
+            const btnAp = document.getElementById('hs-tab-ap');
+            const contentGen = document.getElementById('hs-general-content');
+            const contentAp = document.getElementById('hs-ap-content');
+
+            if (tab === 'general') {
+                btnGen.className = "segmented-btn active px-4 py-1.5 rounded-full transition-all";
+                btnAp.className = "segmented-btn px-4 py-1.5 text-apple-subtext rounded-full transition-all";
+                contentGen.classList.remove('hidden');
+                contentAp.classList.add('hidden');
+            } else {
+                btnAp.className = "segmented-btn active px-4 py-1.5 rounded-full transition-all";
+                btnGen.className = "segmented-btn px-4 py-1.5 text-apple-subtext rounded-full transition-all";
+                contentAp.classList.remove('hidden');
+                contentGen.classList.add('hidden');
+            }
+        }
+
+        let currentCategory = 'all';
+
+        function filterResources() {
+            const query = document.getElementById('master-search-input').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.resource-card');
+            const clearBtn = document.getElementById('clear-search-btn');
+            const statusBar = document.getElementById('search-status-bar');
+            const searchCountElem = document.getElementById('search-count');
+            const searchQueryText = document.getElementById('search-query-text');
+
+            if (query.length > 0) {
+                clearBtn.classList.remove('hidden');
+                statusBar.classList.remove('hidden');
+                searchQueryText.innerText = query;
+            } else {
+                clearBtn.classList.add('hidden');
+                statusBar.classList.add('hidden');
+            }
+
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const title = card.querySelector('h3, h4')?.innerText.toLowerCase() || '';
+                const desc = card.querySelector('p')?.innerText.toLowerCase() || '';
+                const tags = card.getAttribute('data-tags') || '';
+                const cat = card.getAttribute('data-category') || '';
+
+                const matchesQuery = query === '' || title.includes(query) || desc.includes(query) || tags.includes(query);
+                const matchesCategory = (currentCategory === 'all') || (cat === currentCategory);
+
+                if (matchesQuery && matchesCategory) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            searchCountElem.innerText = visibleCount;
+        }
+
+        function clearSearch() {
+            document.getElementById('master-search-input').value = '';
+            filterResources();
+        }
+
+        function setFilterCategory(evt, cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.filter-pill').forEach(pill => {
+                pill.className = "filter-pill px-3 py-1.5 rounded-full bg-apple-pill text-apple-text hover:bg-slate-200 transition-all";
+            });
+
+            if (evt && evt.currentTarget) {
+                evt.currentTarget.className = "filter-pill active px-3 py-1.5 rounded-full bg-apple-blue text-white transition-all";
+            }
+
+            filterResources();
+        }
+
+        let savedResources = JSON.parse(localStorage.getItem('mathphys_saved_apple') || '[]');
+
+        function updateSavedUI() {
+            document.getElementById('saved-counter-badge').innerText = savedResources.length;
+            const container = document.getElementById('saved-items-container');
+
+            if (savedResources.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-apple-subtext space-y-2">
+                        <span class="text-3xl block">★</span>
+                        <p class="text-xs">No saved resources yet.</p>
+                        <p class="text-[11px]">Click the star on any card to add it to your daily reading list.</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = savedResources.map(item => `
+                    <div class="p-4 bg-apple-bg border border-apple-border rounded-2xl space-y-2 relative">
+                        <button onclick="toggleBookmark('${item.id}')" class="absolute top-3 right-3 text-apple-subtext hover:text-apple-red text-sm">✕</button>
+                        <h4 class="text-sm font-bold text-apple-text pr-6">${item.title}</h4>
+                        <p class="text-xs text-apple-subtext line-clamp-2">${item.desc}</p>
+                        <a href="${item.link}" target="_blank" rel="noopener" class="text-xs text-apple-blue font-semibold inline-block pt-1">Open Resource →</a>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function toggleBookmark(id) {
+            const starElem = document.querySelector(`#star-${id}`);
+            if (!starElem) return;
+            const card = starElem.closest('.resource-card');
+            if (!card) return;
+
+            const title = card.querySelector('h3, h4').innerText;
+            const desc = card.querySelector('p').innerText;
+            const link = card.querySelector('a').getAttribute('href');
+
+            const existingIndex = savedResources.findIndex(item => item.id === id);
+            if (existingIndex > -1) {
+                savedResources.splice(existingIndex, 1);
+            } else {
+                savedResources.push({ id, title, desc, link });
+            }
+
+            localStorage.setItem('mathphys_saved_apple', JSON.stringify(savedResources));
+            updateSavedUI();
+        }
+
+        function toggleSavedDrawer() {
+            document.getElementById('saved-drawer').classList.toggle('translate-x-full');
+        }
+
+        const quizBank = {
+            calc: [
+                {
+                    q: "What is the derivative of f(x) = ln(x^2 + 1)?",
+                    options: ["1 / (x^2 + 1)", "2x / (x^2 + 1)", "2x * ln(x)", "x / (x^2 + 1)"],
+                    correct: 1,
+                    explanation: "By Chain Rule: d/dx[ln(u)] = (1/u) * u'. Here u = x^2 + 1, so u' = 2x."
+                },
+                {
+                    q: "Evaluate integral of e^(2x) dx:",
+                    options: ["2 * e^(2x) + C", "(1/2) * e^(2x) + C", "e^(2x) + C", "(1/4) * e^(2x) + C"],
+                    correct: 1,
+                    explanation: "By u-substitution with u = 2x, du = 2 dx -> dx = du/2. Result is (1/2)e^(2x) + C."
+                }
+            ],
+            physics: [
+                {
+                    q: "A particle moves in a circle of radius R at constant speed v. What is its centripetal acceleration?",
+                    options: ["Zero", "v^2 / R directed towards center", "v / R^2 directed outward", "g * sin(theta)"],
+                    correct: 1,
+                    explanation: "Direction changes continuously, yielding centripetal acceleration a_c = v^2 / R inward."
+                }
+            ]
+        };
+
+        let currentQuizTopic = 'calc';
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+
+        function startBuiltInQuiz(topic) {
+            currentQuizTopic = topic;
+            currentQuizIndex = 0;
+            quizScore = 0;
+
+            document.getElementById('quiz-welcome-state').classList.add('hidden');
+            document.getElementById('quiz-active-state').classList.remove('hidden');
+            document.getElementById('quiz-footer-actions').classList.remove('hidden');
+
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            const questions = quizBank[currentQuizTopic];
+            const qData = questions[currentQuizIndex];
+
+            document.getElementById('quiz-topic-badge').innerText = currentQuizTopic === 'calc' ? 'CALCULUS CHECKUP' : 'MECHANICS CHECKUP';
+            document.getElementById('quiz-progress-indicator').innerText = `Question ${currentQuizIndex + 1} of ${questions.length}`;
+            document.getElementById('quiz-question-text').innerText = qData.q;
+
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = qData.options.map((opt, i) => `
+                <button onclick="submitQuizAnswer(${i})" class="w-full text-left p-2.5 rounded-xl bg-apple-bg hover:bg-slate-200 border border-apple-border text-xs text-apple-text font-medium transition-colors flex items-center justify-between">
+                    <span>${String.fromCharCode(65 + i)}. ${opt}</span>
+                    <span class="text-apple-subtext">→</span>
+                </button>
+            `).join('');
+
+            const feedbackBox = document.getElementById('quiz-feedback-box');
+            feedbackBox.classList.add('hidden');
+            document.getElementById('quiz-score-tracker').innerText = `Score: ${quizScore}/${currentQuizIndex}`;
+        }
+
+        function submitQuizAnswer(selectedIndex) {
+            const questions = quizBank[currentQuizTopic];
+            const qData = questions[currentQuizIndex];
+            const feedbackBox = document.getElementById('quiz-feedback-box');
+
+            feedbackBox.classList.remove('hidden');
+            if (selectedIndex === qData.correct) {
+                quizScore++;
+                feedbackBox.className = "p-3 rounded-xl text-xs bg-green-50 border border-green-200 text-green-800";
+                feedbackBox.innerHTML = `<strong>✓ Correct!</strong> ${qData.explanation}`;
+            } else {
+                feedbackBox.className = "p-3 rounded-xl text-xs bg-red-50 border border-red-200 text-red-800";
+                feedbackBox.innerHTML = `<strong>✕ Incorrect.</strong> ${qData.explanation}`;
+            }
+
+            document.getElementById('quiz-score-tracker').innerText = `Score: ${quizScore}/${currentQuizIndex + 1}`;
+        }
+
+        function nextQuizQuestion() {
+            const questions = quizBank[currentQuizTopic];
+            if (currentQuizIndex < questions.length - 1) {
+                currentQuizIndex++;
+                renderQuizQuestion();
+            } else {
+                document.getElementById('quiz-active-state').innerHTML = `
+                    <div class="text-center py-6 space-y-2">
+                        <span class="text-3xl">🎉</span>
+                        <h4 class="text-base font-bold text-apple-text">Checkup Complete!</h4>
+                        <p class="text-xs text-apple-subtext">Final Score: <span class="text-apple-blue font-bold">${quizScore} / ${questions.length}</span></p>
+                        <button onclick="startBuiltInQuiz('${currentQuizTopic}')" class="px-4 py-1.5 bg-apple-blue text-white text-xs font-semibold rounded-full hover:bg-apple-blueHover mt-2">Retake Checkup</button>
+                    </div>
+                `;
+            }
+        }
+
+        function openToolkitModal() {
+            document.getElementById('toolkit-modal').classList.remove('hidden');
+        }
+
+        function closeToolkitModal() {
+            document.getElementById('toolkit-modal').classList.add('hidden');
+        }
+
+        function switchToolkitTab(tab) {
+            if (tab === 'desmos') {
+                document.getElementById('tool-tab-desmos').className = "px-4 py-3 border-b-2 border-apple-blue text-apple-blue font-semibold";
+                document.getElementById('tool-tab-wolfram').className = "px-4 py-3 border-b-2 border-transparent text-apple-subtext hover:text-apple-text";
+                document.getElementById('tool-content-desmos').classList.remove('hidden');
+                document.getElementById('tool-content-wolfram').classList.add('hidden');
+            } else {
+                document.getElementById('tool-tab-wolfram').className = "px-4 py-3 border-b-2 border-apple-blue text-apple-blue font-semibold";
+                document.getElementById('tool-tab-desmos').className = "px-4 py-3 border-b-2 border-transparent text-apple-subtext hover:text-apple-text";
+                document.getElementById('tool-content-wolfram').classList.remove('hidden');
+                document.getElementById('tool-content-desmos').classList.add('hidden');
+            }
+        }
+
+        function launchWolframQuery() {
+            const query = document.getElementById('wolfram-input').value.trim();
+            if (query) {
+                window.open(`https://www.wolframalpha.com/input?i=${encodeURIComponent(query)}`, '_blank');
+            }
+        }
+
+        // Initialize state on page load
+        window.onload = function() {
+            selectHSMathSubject('alg1');
+            selectHSPhysicsTopic('master');
+            selectAPCourse('precalc');
+            updateSavedUI();
+        };
+
+        const apDatabase = {
+            'precalc': {
+                title: "AP Precalculus",
+                desc: "Polynomial, rational, exponential, logarithmic, trigonometric, and polar function modeling.",
+                youtubers: [
+                    { title: "Organic Chemistry Tutor: Precalc", desc: "Clear, step-by-step problem walkthroughs covering unit circles, trigonometric identities, and logarithms.", link: "https://www.youtube.com/playlist?list=PL0o_zxa4K1BWziAJPOQxQmL_Sk684E-JR", badge: "Video Playlist" },
+                    { title: "Brian McLogan Precalculus", desc: "Short, targeted video explanations on solving complex algebraic functions and piecewise equations.", link: "https://www.youtube.com/@mrbrianmclogan", badge: "Targeted Lessons" },
+                    { title: "Khan Academy AP Precalculus", desc: "Official College Board aligned interactive video course with practice exercises after every concept.", link: "https://www.khanacademy.org/math/ap-precalculus", badge: "Aligned Course" }
+                ],
+                programs: [
+                    { title: "CalcMedic AP Precalculus", desc: "Comprehensive guided notes, teaching agendas, and concept review sheets designed by AP teachers.", link: "https://www.calcmedic.com", badge: "Curriculum Hub" },
+                    { title: "OpenStax Precalculus 2e", desc: "Complete 100% free open-access textbook covering function modeling, vectors, and limits preparation.", link: "https://openstax.org/details/books/precalculus-2e", badge: "Free Textbook" },
+                    { title: "Desmos Graphing Suite", desc: "Essential interactive tool for visualizing polynomial transformations, asymptotes, and polar graphs.", link: "https://www.desmos.com/calculator", badge: "Interactive Visualizer" }
+                ],
+                practice: [
+                    { title: "CrackAP Precalculus Practice", desc: "Extensive index of free multiple-choice questions and past free-response style practice sets with keys.", link: "https://www.crackap.com", badge: "Question Bank" },
+                    { title: "DeltaMath AP Precalc Modules", desc: "Auto-graded problem modules focusing on algebraic manipulation and trigonometric identities.", link: "https://www.deltamath.com", badge: "Auto-Graded Drills" },
+                    { title: "College Board Official AP Central", desc: "Official exam descriptions, sample questions, scoring guidelines, and course framework guidelines.", link: "https://apcentral.collegeboard.org/courses/ap-precalculus", badge: "Official Past FRQs" }
+                ]
+            },
+            'calc-ab': {
+                title: "AP Calculus AB",
+                desc: "Limits, derivatives, rates of change, definite integrals, differential equations, and Area/Volume accumulation.",
+                youtubers: [
+                    { title: "Professor Leonard (Calculus I)", desc: "Full-length recorded university classroom lectures explaining limits, derivative proofs, and integrals in depth.", link: "https://www.youtube.com/@ProfessorLeonard", badge: "Full Lectures" },
+                    { title: "TurksMathStuff Calc AB", desc: "Specific AP Calculus review playlists, calculator tips (TI-84/Nspire), and past FRQ walkthroughs.", link: "https://www.youtube.com/@TurksMathStuff", badge: "FRQ Walkthroughs" },
+                    { title: "3Blue1Brown: Essence of Calculus", desc: "Must-watch visual animation series explaining the intuitive geometry of derivatives and integrals.", link: "https://www.youtube.com/playlist?list=PLZHQObOWTQDMsr9K-rj53DwVRMYO3t5We", badge: "Visual Intuition" }
+                ],
+                programs: [
+                    { title: "Paul's Online Math Notes (Calc I)", desc: "Lamar University's legendary online cheat sheets, worked practice problems, and study guides.", link: "https://tutorial.math.lamar.edu/Classes/CalcI/CalcI.aspx", badge: "Gold Standard Notes" },
+                    { title: "CalcMedic AP Calc AB", desc: "Structured unit-by-unit lessons, formula sheets, and strategy guides tailored for AP scoring.", link: "https://www.calcmedic.com/ap-calculus-ab", badge: "Lesson Plans" },
+                    { title: "OpenStax Calculus Volume 1", desc: "Free peer-reviewed calculus textbook covering derivatives, integration, and applications.", link: "https://openstax.org/details/books/calculus-volume-1", badge: "Free Textbook" }
+                ],
+                practice: [
+                    { title: "College Board Past AB FRQs (1998-2025)", desc: "Complete archive of real past AP Calculus AB Free Response Questions with full scoring rubrics.", link: "https://apcentral.collegeboard.org/courses/ap-calculus-ab/exam/past-exam-questions", badge: "Official FRQ Archive" },
+                    { title: "CrackAP Calculus AB Tests", desc: "Hundreds of free multiple-choice practice questions sorted by unit topic (Limits, Chain Rule, Integrals).", link: "https://www.crackap.com/ap/calculus-ab/", badge: "MCQ Bank" },
+                    { title: "MasterMathMentor AP Review", desc: "Downloaded review packets and practice exams with detailed answer keys for AP Calc AB.", link: "http://www.mastermathmentor.com", badge: "Hidden Gem Packets" }
+                ]
+            },
+            'calc-bc': {
+                title: "AP Calculus BC",
+                desc: "All AB topics plus parametric equations, polar coordinates, vector functions, and infinite Taylor/Maclaurin series.",
+                youtubers: [
+                    { title: "PatrickJMT Calculus BC", desc: "Clear, zero-fluff video tutorials on convergence tests, integration by parts, and Taylor polynomial approximations.", link: "http://www.patrickjmt.com", badge: "Problem Walkthroughs" },
+                    { title: "Blackpenredpen Calculus", desc: "Entertaining video sessions demonstrating 100 derivatives, 100 integrals, and series convergence tricks.", link: "https://www.youtube.com/@blackpenredpen", badge: "Hard Practice Sets" },
+                    { title: "NancyPi Calculus", desc: "Intuitive step-by-step videos on parametric equations, polar curve area integrals, and series tests.", link: "https://www.youtube.com/@NancyPi", badge: "Step-by-Step" }
+                ],
+                programs: [
+                    { title: "Paul's Online Notes (Calc II & Series)", desc: "The best reference notes on the web for Taylor Series, Radius of Convergence, and Polar Coordinates.", link: "https://tutorial.math.lamar.edu/Classes/CalcII/CalcII.aspx", badge: "Essential Reference" },
+                    { title: "CalcMedic AP Calc BC", desc: "Daily lesson guides designed to cover the entire BC fast-paced syllabus before May exam dates.", link: "https://www.calcmedic.com/ap-calculus-bc", badge: "Structured Curriculum" },
+                    { title: "OpenStax Calculus Volume 2", desc: "Free open textbook detailing infinite series, power series, and parametric/polar equations.", link: "https://openstax.org/details/books/calculus-volume-2", badge: "Free Textbook" }
+                ],
+                practice: [
+                    { title: "College Board Past BC FRQs Archive", desc: "Official past BC free-response questions with solutions, scoring distributions, and student samples.", link: "https://apcentral.collegeboard.org/courses/ap-calculus-bc/exam/past-exam-questions", badge: "Official Past FRQs" },
+                    { title: "CrackAP Calculus BC Practice", desc: "Full-length free practice exams and section tests targeting Taylor Series and Polar Calculus.", link: "https://www.crackap.com/ap/calculus-bc/", badge: "MCQ & FRQ Bank" },
+                    { title: "MIT Integration Bee Archive", desc: "Challenge problem sets for mastering advanced integration techniques needed for top BC scores.", link: "https://math.mit.edu/~integration-bee/", badge: "Hard Challenge Sets" }
+                ]
+            },
+            'phys-1': {
+                title: "AP Physics 1 (Algebra-Based)",
+                desc: "Kinematics, Newton's laws, work & energy, linear momentum, simple harmonic motion, rotational dynamics, and torque.",
+                youtubers: [
+                    { title: "Flipping Physics AP Physics 1", desc: "Comedic, highly thorough video review series with real-world physical demonstrations and AP exam tips.", link: "https://www.flippingphysics.com/ap-physics-1.html", badge: "Must-Watch Series" },
+                    { title: "Organic Chemistry Tutor: Physics 1", desc: "Step-by-step calculations for free-body diagrams, inclined planes, pulley systems, and circular motion.", link: "https://www.youtube.com/playlist?list=PL0o_zxa4K1BU6wrbC3a6Ja3bJHvGs_yM8", badge: "Problem Solving" },
+                    { title: "Physics Galaxy (Ashish Arora)", desc: "Deep conceptual explanations of rotational inertia, conservation of angular momentum, and simple harmonic motion.", link: "https://www.physicsgalaxy.com", badge: "Concept Deep-Dive" }
+                ],
+                programs: [
+                    { title: "The Physics Classroom (AP 1)", desc: "Concept builders, interactive physics gizmos, and organized study guides for mechanics topics.", link: "https://www.physicsclassroom.com", badge: "Interactive Tutorials" },
+                    { title: "APlusPhysics (Dan Fullerton)", desc: "Detailed AP Physics 1 notes, worksheets, and companion study guide PDFs.", link: "https://www.aplusphysics.com/courses/ap-1/index.html", badge: "PDF Study Guides" },
+                    { title: "OpenStax College Physics AP Edition", desc: "Peer-reviewed, free open textbook tailored to College Board's algebra-based physics learning objectives.", link: "https://openstax.org/details/books/college-physics-2e", badge: "Free AP Textbook" }
+                ],
+                practice: [
+                    { title: "MIT RELATE AP Physics 1 Workbook", desc: "MIT's legendary downloadable problem workbook with worked solution guides for mechanics.", link: "https://web.mit.edu/relate/www/AP_Physics/", badge: "Hidden Gem PDF" },
+                    { title: "CrackAP Physics 1 Practice Tests", desc: "Dozens of free multiple choice diagnostic tests covering kinematics, torque, and momentum.", link: "https://www.crackap.com/ap/physics-1/", badge: "Practice Test Bank" },
+                    { title: "College Board Past AP Physics 1 FRQs", desc: "Official paragraph-length response and experimental design FRQs with official grading guidelines.", link: "https://apcentral.collegeboard.org/courses/ap-physics-1/exam/past-exam-questions", badge: "Official Past FRQs" }
+                ]
+            },
+            'phys-2': {
+                title: "AP Physics 2 (Algebra-Based)",
+                desc: "Fluids, thermodynamics, electric force & circuits, magnetism, optics, and quantum/atomic physics.",
+                youtubers: [
+                    { title: "Flipping Physics AP Physics 2", desc: "Complete video topic walkthroughs for fluid dynamics, thermodynamics, electrostatics, and optics.", link: "https://www.flippingphysics.com/ap-physics-2.html", badge: "Full Video Review" },
+                    { title: "Doc Schuster Physics", desc: "Engaging chalkboard video lectures breaking down Bernoulli's equation, magnetic fields, and circuits.", link: "https://www.youtube.com/user/DocSchuster", badge: "Chalkboard Lectures" },
+                    { title: "Lasseviren1 Physics", desc: "Concise whiteboard tutorials explaining fluid pressure, PV diagrams, lens equations, and nuclear decay.", link: "https://www.youtube.com/@lasseviren1", badge: "Whiteboard Review" }
+                ],
+                programs: [
+                    { title: "APlusPhysics AP Physics 2 Guide", desc: "Dan Fullerton's organized reference pages covering thermodynamics, circuits, optics, and modern physics.", link: "https://www.aplusphysics.com/courses/ap-2/index.html", badge: "Course Notes" },
+                    { title: "PhET Interactive Sims (CU Boulder)", desc: "Interactive simulations for fluid pressure, geometric optics, capacitor circuits, and photoelectric effect.", link: "https://phet.colorado.edu", badge: "Interactive Labs" },
+                    { title: "OpenStax Physics AP Edition", desc: "Comprehensive free textbook covering thermodynamic laws, wave optics, and nuclear interactions.", link: "https://openstax.org/subjects/science", badge: "Free Open Textbook" }
+                ],
+                practice: [
+                    { title: "CrackAP Physics 2 Practice Tests", desc: "Free multiple-choice practice sets for fluid mechanics, electrostatics, and magnetic induction.", link: "https://www.crackap.com/ap/physics-2/", badge: "Practice Test Bank" },
+                    { title: "College Board Past AP Physics 2 FRQs", desc: "Official past exam free-response questions with rubrics covering PV diagrams and ray tracing.", link: "https://apcentral.collegeboard.org/courses/ap-physics-2/exam/past-exam-questions", badge: "Official Past FRQs" },
+                    { title: "PhysicsPrep AP Physics 2 Practice", desc: "Jack Glassman's online quizzes and practice exam problems for AP Physics 2 preparation.", link: "https://www.physics-prep.com", badge: "Online Quizzes" }
+                ]
+            },
+            'phys-c-mech': {
+                title: "AP Physics C: Mechanics",
+                desc: "Calculus-based kinematics, Newton's laws, work-energy theorem, systems of particles, linear momentum, rotation, and oscillations.",
+                youtubers: [
+                    { title: "Flipping Physics AP Physics C: Mech", desc: "Calculus-infused video series showing derivative/integral derivations for rotational inertia and harmonic motion.", link: "https://www.flippingphysics.com/ap-physics-c-mechanics.html", badge: "Calculus Derivations" },
+                    { title: "Michel van Biezen Physics Mechanics", desc: "Thousands of short, structured video examples solving tricky calculus physics problems step by step.", link: "https://www.youtube.com/@ilectureonline", badge: "Problem Solving" },
+                    { title: "Viren's AP Physics C", desc: "Clear, classroom-tested video lectures explaining variable mass systems, air resistance differential equations, and torque.", link: "https://www.youtube.com/@lasseviren1", badge: "Class Lectures" }
+                ],
+                programs: [
+                    { title: "MIT RELATE AP Physics C Workbook", desc: "MIT's gold-standard problem workbook for calculus-based mechanics with complete worked solutions.", link: "https://web.mit.edu/relate/www/AP_Physics/", badge: "Gold Standard PDF" },
+                    { title: "HyperPhysics (Georgia State Univ)", desc: "Interactive graphical concept maps explaining calculus-based physics mechanics equations.", link: "http://hyperphysics.phy-astr.gsu.edu", badge: "Concept Maps" },
+                    { title: "OpenStax University Physics Vol 1", desc: "Calculus-based open textbook detailing motion vectors, energy integrals, and rotational mechanics.", link: "https://openstax.org/details/books/university-physics-volume-1", badge: "Free Textbook" }
+                ],
+                practice: [
+                    { title: "CrackAP Physics C: Mechanics", desc: "Huge collection of past multiple-choice questions and unit tests for calculus mechanics.", link: "https://www.crackap.com/ap/physics-c-mechanics/", badge: "MCQ Practice Bank" },
+                    { title: "College Board Past C-Mech FRQs (1973-2025)", desc: "Archive of calculus-based mechanics FRQs covering differential equations and moment of inertia.", link: "https://apcentral.collegeboard.org/courses/ap-physics-c-mechanics/exam/past-exam-questions", badge: "Official Past FRQs" },
+                    { title: "NJCTL Physics C Mechanics", desc: "Free downloadable PDF problem sets with answer keys for calculus physics topics.", link: "https://njctl.org/courses/science/ap-physics-c-mechanics/", badge: "Worksheet Sets" }
+                ]
+            },
+            'phys-c-em': {
+                title: "AP Physics C: Electricity & Magnetism",
+                desc: "Calculus-based electrostatics, Gauss's Law, electric potential, conductors, RC/RL/LC circuits, Ampere's Law, and Faraday/Lenz Induction.",
+                youtubers: [
+                    { title: "Flipping Physics AP Physics C: E&M", desc: "Detailed video derivations of Gauss's Law surface integrals, Ampere's Law loops, and inductance calculus.", link: "https://www.flippingphysics.com/ap-physics-c-electricity-and-magnetism.html", badge: "Derivation Videos" },
+                    { title: "Doc Schuster E&M Series", desc: "Engaging lectures breaking down electric fields, potential integrals, Biot-Savart Law, and Maxwell's equations.", link: "https://www.youtube.com/user/DocSchuster", badge: "E&M Lectures" },
+                    { title: "Michel van Biezen Electromagnetism", desc: "Clear step-by-step solution videos for calculating electric flux, magnetic force vectors, and RL circuits.", link: "https://www.youtube.com/@ilectureonline", badge: "Worked Problems" }
+                ],
+                programs: [
+                    { title: "MIT Physics C E&M Interactive Workbook", desc: "MIT's challenge workbook covering vector calculus applications in electrostatics and magnetism.", link: "https://web.mit.edu/relate/www/AP_Physics/", badge: "MIT Challenge Book" },
+                    { title: "OpenStax University Physics Vol 2", desc: "Calculus-based textbook covering Maxwell's equations, electric potential, and magnetic induction.", link: "https://openstax.org/details/books/university-physics-volume-2", badge: "Free Textbook" },
+                    { title: "PhET E&M Simulations", desc: "Manipulate point charges, electric field vectors, solenoids, and Faraday induction circuits in real time.", link: "https://phet.colorado.edu", badge: "Interactive Labs" }
+                ],
+                practice: [
+                    { title: "CrackAP Physics C: E&M Practice", desc: "Free practice tests targeting Gauss's Law, capacitance, magnetic force, and induction.", link: "https://www.crackap.com/ap/physics-c-em/", badge: "MCQ & FRQ Bank" },
+                    { title: "College Board Past C: E&M FRQs", desc: "Complete official past free-response questions with scoring rubrics and solution guides.", link: "https://apcentral.collegeboard.org/courses/ap-physics-c-electricity-and-magnetism/exam/past-exam-questions", badge: "Official Past FRQs" },
+                    { title: "PhysicsPrep E&M Practice Exams", desc: "Jack Glassman's calculus-based practice quizzes and full-length exam simulations for E&M.", link: "https://www.physics-prep.com", badge: "Exam Prep" }
+                ]
+            }
+        };
+
+        function selectAPCourse(courseKey) {
+            document.querySelectorAll('.ap-course-pill').forEach(btn => {
+                btn.className = "ap-course-pill px-3.5 py-2 rounded-xl bg-apple-pill text-apple-text hover:bg-slate-200 transition-all";
+            });
+            
+            const activeBtn = document.getElementById(`ap-btn-${courseKey}`);
+            if (activeBtn) {
+                activeBtn.className = "ap-course-pill active px-3.5 py-2 rounded-xl bg-apple-purple text-white transition-all shadow-apple-sm";
+            }
+
+            const course = apDatabase[courseKey];
+            if (!course) return;
+
+            document.getElementById('ap-course-title').innerText = course.title;
+            document.getElementById('ap-course-desc').innerText = course.desc;
+
+            const grid = document.getElementById('ap-resource-display-grid');
+            
+            grid.innerHTML = `
+                <!-- Column 1: Youtubers -->
+                <div class="space-y-3">
+                    <h5 class="text-xs font-bold text-apple-purple uppercase tracking-wider flex items-center gap-1.5 pb-1 border-b border-apple-border">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        Youtubers & Video Courses
+                    </h5>
+                    ${course.youtubers.map((item, idx) => `
+                        <div class="bg-apple-bg p-4 rounded-2xl border border-apple-border apple-card-hover flex flex-col justify-between resource-card" data-category="ap" data-tags="ap ${courseKey} video youtube">
+                            <div>
+                                <span class="px-2 py-0.5 bg-apple-purple/10 text-apple-purple rounded text-[10px] font-semibold mb-2 inline-block">${item.badge}</span>
+                                <h6 class="text-xs font-bold text-apple-text mb-1">${item.title}</h6>
+                                <p class="text-[11px] text-apple-subtext leading-relaxed mb-3">${item.desc}</p>
+                            </div>
+                            <a href="${item.link}" target="_blank" rel="noopener" class="text-[11px] text-apple-blue font-semibold hover:underline flex items-center justify-between pt-1">
+                                <span>Watch Channel</span> →
+                            </a>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <!-- Column 2: Programs -->
+                <div class="space-y-3">
+                    <h5 class="text-xs font-bold text-apple-blue uppercase tracking-wider flex items-center gap-1.5 pb-1 border-b border-apple-border">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        Programs & Open Textbooks
+                    </h5>
+                    ${course.programs.map((item, idx) => `
+                        <div class="bg-apple-bg p-4 rounded-2xl border border-apple-border apple-card-hover flex flex-col justify-between resource-card" data-category="ap" data-tags="ap ${courseKey} program book textbook">
+                            <div>
+                                <span class="px-2 py-0.5 bg-apple-blue/10 text-apple-blue rounded text-[10px] font-semibold mb-2 inline-block">${item.badge}</span>
+                                <h6 class="text-xs font-bold text-apple-text mb-1">${item.title}</h6>
+                                <p class="text-[11px] text-apple-subtext leading-relaxed mb-3">${item.desc}</p>
+                            </div>
+                            <a href="${item.link}" target="_blank" rel="noopener" class="text-[11px] text-apple-blue font-semibold hover:underline flex items-center justify-between pt-1">
+                                <span>Open Program</span> →
+                            </a>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <!-- Column 3: Practice -->
+                <div class="space-y-3">
+                    <h5 class="text-xs font-bold text-apple-green uppercase tracking-wider flex items-center gap-1.5 pb-1 border-b border-apple-border">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        Practice Banks & Past FRQs
+                    </h5>
+                    ${course.practice.map((item, idx) => `
+                        <div class="bg-apple-bg p-4 rounded-2xl border border-apple-border apple-card-hover flex flex-col justify-between resource-card" data-category="ap" data-tags="ap ${courseKey} practice frq exam test">
+                            <div>
+                                <span class="px-2 py-0.5 bg-apple-green/10 text-apple-green rounded text-[10px] font-semibold mb-2 inline-block">${item.badge}</span>
+                                <h6 class="text-xs font-bold text-apple-text mb-1">${item.title}</h6>
+                                <p class="text-[11px] text-apple-subtext leading-relaxed mb-3">${item.desc}</p>
+                            </div>
+                            <a href="${item.link}" target="_blank" rel="noopener" class="text-[11px] text-apple-blue font-semibold hover:underline flex items-center justify-between pt-1">
+                                <span>Access Practice</span> →
+                            </a>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
